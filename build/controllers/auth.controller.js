@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.logIn = exports.signUp = void 0;
 
-var _User = _interopRequireDefault(require("../models/User"));
+var _user = _interopRequireDefault(require("../models/user"));
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
@@ -19,7 +19,7 @@ const signUp = (req, res) => {
   let password = _bcryptjs.default.hashSync(req.body.password, 10); // Crear un usuario
 
 
-  _User.default.create({
+  _user.default.create({
     id: req.body.id,
     rol_id: req.body.rol_id,
     username: req.body.username,
@@ -52,7 +52,7 @@ const logIn = (req, res) => {
     password
   } = req.body; // Buscar usuario
 
-  _User.default.findOne({
+  _user.default.findOne({
     where: {
       mail: mail
     }

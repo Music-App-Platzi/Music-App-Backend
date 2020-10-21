@@ -1,7 +1,7 @@
 {
   "name": "music-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "API for Music App",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js --exec babel-node",
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/Music-App-Platzi/Music-App-Backend.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Team2",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Music-App-Platzi/Music-App-Backend/issues"
@@ -23,11 +23,16 @@
     "@babel/polyfill": "^7.12.1",
     "aws-sdk": "^2.775.0",
     "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "helmet": "^4.1.1",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "pg": "^8.4.1",
     "pg-hstore": "^2.3.3",
+    "regenerator-runtime": "^0.13.7",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
@@ -36,5 +41,12 @@
     "@babel/node": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "nodemon": "^2.0.5"
-  }
+  },
+  "browserslist": [
+		"last 3 and_chr versions",
+		"last 3 chrome versions",
+		"last 3 opera versions",
+		"last 3 ios_saf versions",
+		"last 3 safari versions"
+	]
 }

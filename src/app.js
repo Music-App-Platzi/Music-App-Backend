@@ -9,6 +9,7 @@ import authRoutes from './routes/auth.routes';
 //importing routes
 import userRoutes from './routes/users.routes';
 import uploadRoutes from './routes/upload.routes';
+import albumRoutes from './routes/albums.routes';
 
 const app = express();
 
@@ -43,6 +44,9 @@ app.use('/api/auth', authRoutes)
 
 //users
 app.use('/api/users', userRoutes);
+//upload
 app.use('/api/upload', uploadRoutes);
+//album
+app.use('/api/albums', albumRoutes);
 
 export default app;

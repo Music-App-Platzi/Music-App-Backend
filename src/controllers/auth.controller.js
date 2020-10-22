@@ -9,14 +9,17 @@ export const signUp = (req, res) => {
 
         // Crear un usuario
         User.create({
-            id: req.body.id,
+            //id: req.body.id,
             rol_id: req.body.rol_id,
             username: req.body.username,
             name: req.body.name,
             mail: req.body.mail,
             password: password,
-            thumbnail: req.body.thumbnail
-        }).then(user => {
+            //thumbnail: req.body.thumbnail
+        },{
+            fields: ['rol_id', 'username', 'name', 'mail', 'password'] 
+        }
+        ).then(user => {
 
             // Creamos el token
             let token = jwt.sign({ user: user }, config.SECRET, {

@@ -2,6 +2,8 @@
 
 var _app = _interopRequireDefault(require("./app"));
 
+require("@babel/polyfill");
+
 require("regenerator-runtime");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

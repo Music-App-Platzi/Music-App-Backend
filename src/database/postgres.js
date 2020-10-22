@@ -1,12 +1,19 @@
 import Sequelize from 'sequelize';
+import config from '../config';
+
+const DB_NAME = config.DB_NAME;
+const DB_USER = config.DB_USER;
+const DB_PASSWORD = config.DB_PASSWORD;
+const DB_HOST = config.DB_HOST;
+const DB_PORT = config.DB_PORT;
 
 export const sequelize = new Sequelize(
-    'musicAppDb',
-    'musicAdmin',
-    'secret',
+    DB_NAME,
+    DB_USER,
+    DB_PASSWORD,
     {
-        host: '3.128.32.140',
-        port: 5438,
+        host: DB_HOST,
+        port: DB_PORT,
         dialect: 'postgres',
         pool: {
             max:5,

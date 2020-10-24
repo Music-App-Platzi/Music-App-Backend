@@ -3,12 +3,14 @@ import morgan from 'morgan';
 import pkg from '../package.json';
 import helmet from 'helmet';
 
-// import routes
-import authRoutes from './routes/auth.routes';
-
 //importing routes
+import authRoutes from './routes/auth.routes';
+import artistRoutes from './routes/artists.routes';
+import playlistRoutes from './routes/playlists.routes';
 import userRoutes from './routes/users.routes';
 import uploadRoutes from './routes/upload.routes';
+import albumRoutes from './routes/albums.routes';
+import roleRoutes from './routes/roles.routes';
 
 const app = express();
 
@@ -39,10 +41,18 @@ app.get('/', (req, res) => {
 })
 
 // routes
-app.use('/api/auth', authRoutes)
-
+app.use('/api/auth', authRoutes);
+//artists
+app.use('/api/artists', artistRoutes);
+//playlists
+app.use('/api/playlists', playlistRoutes);
 //users
 app.use('/api/users', userRoutes);
+//upload
 app.use('/api/upload', uploadRoutes);
+//album
+app.use('/api/albums', albumRoutes);
+//role
+app.use('/api/roles', roleRoutes);
 
 export default app;

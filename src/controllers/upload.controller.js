@@ -1,14 +1,15 @@
 import User from '../models/user';
 const AWS = require('aws-sdk');
+import config from '../config';
+
 
 export async function uploadThumbnail(req, res) {
     try {
         const { id } = req.params;
 
-        const BUCKET_NAME = 'music-app-platzi';
-        const IAM_USER_KEY = 'AKIAZ37MRXDHU325UAS6';
-        const IAM_USER_SECRET = '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';
-        console.log(req.file)
+        const BUCKET_NAME = config.BUCKET_NAME;
+        const IAM_USER_KEY = config.IAM_USER_KEY;
+        const IAM_USER_SECRET = config.IAM_USER_SECRET;
 
         let s3bucket = new AWS.S3({
             accessKeyId: IAM_USER_KEY,

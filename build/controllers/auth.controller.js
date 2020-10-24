@@ -16,21 +16,20 @@ var _bcryptjs = _interopRequireDefault(require("bcryptjs"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const signUp = (req, res) => {
-  let password = _bcryptjs.default.hashSync(req.body.password, 10); // Crear un usuario
+  // hash password
+  let password = _bcryptjs.default.hashSync(req.body.password, 10); // create user
 
 
   _user.default.create({
-    //id: req.body.id,
     rol_id: req.body.rol_id,
     username: req.body.username,
     name: req.body.name,
     mail: req.body.mail,
-    password: password //thumbnail: req.body.thumbnail
-
+    password: password
   }, {
     fields: ['rol_id', 'username', 'name', 'mail', 'password']
   }).then(user => {
-    // Creamos el token
+    // create token
     let token = _jsonwebtoken.default.sign({
       user: user
     }, _config.default.SECRET, {
@@ -52,7 +51,7 @@ const logIn = (req, res) => {
   let {
     mail,
     password
-  } = req.body; // Buscar usuario
+  } = req.body; // search user
 
   _user.default.findOne({
     where: {
@@ -65,7 +64,7 @@ const logIn = (req, res) => {
       });
     } else {
       if (_bcryptjs.default.compareSync(password, user.password)) {
-        // Creamos el token
+        // create token
         let token = _jsonwebtoken.default.sign({
           user: user
         }, _config.default.SECRET, {
@@ -74,6 +73,7 @@ const logIn = (req, res) => {
 
         res.json({
           user: user,
+          is_user: true,
           token: token
         });
       } else {

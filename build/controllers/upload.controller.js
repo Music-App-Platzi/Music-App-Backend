@@ -7,6 +7,8 @@ exports.uploadThumbnail = uploadThumbnail;
 
 var _user = _interopRequireDefault(require("../models/user"));
 
+var _config = _interopRequireDefault(require("../config"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const AWS = require('aws-sdk');
@@ -16,10 +18,9 @@ async function uploadThumbnail(req, res) {
     const {
       id
     } = req.params;
-    const BUCKET_NAME = 'music-app-platzi';
-    const IAM_USER_KEY = 'AKIAZ37MRXDHU325UAS6';
-    const IAM_USER_SECRET = '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';
-    console.log(req.file);
+    const BUCKET_NAME = _config.default.BUCKET_NAME;
+    const IAM_USER_KEY = _config.default.IAM_USER_KEY;
+    const IAM_USER_SECRET = _config.default.IAM_USER_SECRET;
     let s3bucket = new AWS.S3({
       accessKeyId: IAM_USER_KEY,
       secretAccessKey: IAM_USER_SECRET,

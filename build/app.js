@@ -15,9 +15,17 @@ var _helmet = _interopRequireDefault(require("helmet"));
 
 var _auth = _interopRequireDefault(require("./routes/auth.routes"));
 
+var _artists = _interopRequireDefault(require("./routes/artists.routes"));
+
+var _playlists = _interopRequireDefault(require("./routes/playlists.routes"));
+
 var _users = _interopRequireDefault(require("./routes/users.routes"));
 
 var _upload = _interopRequireDefault(require("./routes/upload.routes"));
+
+var _albums = _interopRequireDefault(require("./routes/albums.routes"));
+
+var _roles = _interopRequireDefault(require("./routes/roles.routes"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25,7 +33,6 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-// import routes
 //importing routes
 const app = (0, _express.default)(); // Cors
 
@@ -52,9 +59,18 @@ app.get('/', (req, res) => {
   });
 }); // routes
 
-app.use('/api/auth', _auth.default); //users
+app.use('/api/auth', _auth.default); //artists
 
-app.use('/api/users', _users.default);
-app.use('/api/upload', _upload.default);
+app.use('/api/artists', _artists.default); //playlists
+
+app.use('/api/playlists', _playlists.default); //users
+
+app.use('/api/users', _users.default); //upload
+
+app.use('/api/upload', _upload.default); //album
+
+app.use('/api/albums', _albums.default); //role
+
+app.use('/api/roles', _roles.default);
 var _default = app;
 exports.default = _default;

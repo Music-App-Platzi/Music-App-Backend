@@ -11,32 +11,23 @@ var _postgres = require("../database/postgres");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const User = _postgres.sequelize.define('users', {
+const Role = _postgres.sequelize.define('roles', {
   id: {
     type: _sequelize.default.INTEGER,
     primaryKey: true
   },
-  rol_id: {
-    type: _sequelize.default.INTEGER
-  },
-  username: {
-    type: _sequelize.default.TEXT
-  },
   name: {
     type: _sequelize.default.TEXT
   },
-  mail: {
+  slug: {
     type: _sequelize.default.TEXT
   },
-  password: {
-    type: _sequelize.default.TEXT
-  },
-  thumbnail: {
+  description: {
     type: _sequelize.default.TEXT
   }
 }, {
   timestamps: false
 });
 
-var _default = User;
+var _default = Role;
 exports.default = _default;

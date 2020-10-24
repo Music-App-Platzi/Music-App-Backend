@@ -62,6 +62,7 @@ export const logIn = (req, res) => {
 
                     res.json({
                         user: user,
+                        is_user: true,
                         token: token
                     })
 

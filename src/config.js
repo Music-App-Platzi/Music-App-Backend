@@ -2,6 +2,18 @@ import { config } from 'dotenv';
 config();
 
 export default {
-    SECRET: 'f66cc1298405d935c00367d33d16fc4e377ac40112978b8efab42f0dc5c5a800',
-    PORT: process.env.PORT || 3000
+    
+    SECRET: process.env.AUTH_JWT_SECRET,
+    PORT: process.env.PORT || 3000,
+
+    BUCKET_NAME: process.env.BUCKET_NAME,
+    IAM_USER_KEY: process.env.IAM_USER_KEY,
+    IAM_USER_SECRET: process.env.IAM_USER_SECRET,
+    
+    DB_NAME: process.env.DB_NAME,
+    DB_USER: process.env.DB_USER,
+    DB_PASSWORD: process.env.DB_PASSWORD,
+    DB_HOST: process.env.DB_HOST,
+    DB_PORT: process.env.DB_PORT
+
 }

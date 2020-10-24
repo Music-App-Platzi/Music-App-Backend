@@ -3,7 +3,8 @@ import morgan from 'morgan';
 import pkg from '../package.json';
 import helmet from 'helmet';
 
-//importing routes
+// import routes
+import artistRoutes from './routes/artists.routes';
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/users.routes';
 import uploadRoutes from './routes/upload.routes';
@@ -39,7 +40,9 @@ app.get('/', (req, res) => {
 })
 
 // auth
-app.use('/api/auth', authRoutes)
+app.use('/api/auth', authRoutes);
+//artists
+app.use('/api/artists', artistRoutes);
 //users
 app.use('/api/users', userRoutes);
 //upload

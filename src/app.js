@@ -6,6 +6,7 @@ import helmet from 'helmet';
 //importing routes
 import authRoutes from './routes/auth.routes';
 import songRoutes from './routes/songs.routes';
+import song_heardRoutes from './routes/songs_heards.routes';
 import artistRoutes from './routes/artists.routes';
 import playlistRoutes from './routes/playlists.routes';
 import userRoutes from './routes/users.routes';
@@ -45,6 +46,8 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 //songs
 app.use('/api/songs', songRoutes);
+//songs_heard
+app.use('/api/songs-heards', song_heardRoutes);
 //artists
 app.use('/api/artists', artistRoutes);
 //playlists

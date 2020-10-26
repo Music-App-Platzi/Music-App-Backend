@@ -1,6 +1,6 @@
 import Playlist_song from '../models/playlist_song';
 
-export async function createPlaylist(req, res) {
+export async function createPlaylistSongs(req, res) {
     const { playlist_id, song_id } = req.body;
     try {
         let newPlaylist_song = await Playlist_song.create({
@@ -11,7 +11,7 @@ export async function createPlaylist(req, res) {
         });
     if (newPlaylist_song) {
         return res.json({
-            message: 'Playlist created successfully',
+            message: 'Track in playlist created successfully',
             data: newPlaylist_song
         });
     }
@@ -26,29 +26,34 @@ export async function createPlaylist(req, res) {
     }
 }
 
-export async function updatePlaylist(req, res) {
+export async function getPlaylistSongs(req, res) {
+    try {
+         const playlistSongs = await Playlist_song.findAll();
+         res.json({
+             data: playlistSongs
+         })
+    } catch (err) {
+        res.status(500).json({
+            error: {
+                code: "ERROR",
+                http_code: 500,
+                message: 'Something goes wrong' + err
+            }
+        })
+    }
+}
+
+export async function deletePlaylistSongs(req, res) {
     try {
         const { id } = req.params;
-        const { playlist_id, song_id } = req.body;
-
-        const data = await Playlist_song.findAll({
-            attributes: ['id', 'playlist_id', 'song_id'],
+        const deleteRowCount = await Playlist_song.destroy({
             where: {
                 id
             }
         });
-        if (data.length > 0) {
-            data.forEach(async Playlist_song => {
-                await Playlist_song({
-                    playlist_id,
-                    song_id
-                });
-            })
-        }
-
-        return res.json({
-            message: 'Playlist updated succesfully',
-            data: data
+        res.json({
+            message: 'Track in playlist deleted',
+            count: deleteRowCount
         })
     } catch (err) {
         res.status(500).json({

@@ -12,6 +12,7 @@ import userRoutes from './routes/users.routes';
 import uploadRoutes from './routes/upload.routes';
 import albumRoutes from './routes/albums.routes';
 import roleRoutes from './routes/roles.routes';
+import playlistSongs from './routes/playlist_songs.routes';
 
 const app = express();
 
@@ -57,5 +58,7 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/albums', albumRoutes);
 //role
 app.use('/api/roles', roleRoutes);
+//playlistSongs
+app.use('/api/playlistSongs', playlistSongs);
 
 export default app;

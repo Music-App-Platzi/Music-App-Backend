@@ -1,6 +1,7 @@
 import User from '../models/user';
 const AWS = require('aws-sdk');
 import config from '../config';
+import Playlist from '../models/playlist';
 
 
 export async function uploadThumbnail(req, res) {
@@ -19,6 +20,42 @@ export async function uploadThumbnail(req, res) {
         if (args.length > 0) {
             args.forEach(async User => {
                 await User.update({
+                    thumbnail,
+                });
+            })
+        }
+        return res.json({
+            message: 'Thumbnail upload successfully',
+            data: args
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            error: {
+                code: "ERROR",
+                http_code: 500,
+                message: 'Somethin goes wrong' + error
+            }
+        });
+    }
+}
+
+export async function uploadThumbnailPlaylist(req, res) {
+    try {
+        const { id } = req.params;
+
+        const uploadThumbnail = await uploadFile(req.file, 'thumbnail-playlists/');
+        const thumbnail = uploadThumbnail.Location;
+
+        const args = await Playlist.findAll({
+            attributes: ['id', 'user_id', 'name', 'thumbnail'],
+            where: {
+                id
+            }
+        });
+        if (args.length > 0) {
+            args.forEach(async Playlist => {
+                await Playlist.update({
                     thumbnail,
                 });
             })

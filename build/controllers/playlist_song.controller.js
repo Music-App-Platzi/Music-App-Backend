@@ -3,14 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createPlaylist = createPlaylist;
-exports.updatePlaylist = updatePlaylist;
+exports.createPlaylistSongs = createPlaylistSongs;
+exports.getPlaylistSongs = getPlaylistSongs;
+exports.deletePlaylistSongs = deletePlaylistSongs;
 
 var _playlist_song = _interopRequireDefault(require("../models/playlist_song"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-async function createPlaylist(req, res) {
+async function createPlaylistSongs(req, res) {
   const {
     playlist_id,
     song_id
@@ -26,7 +27,7 @@ async function createPlaylist(req, res) {
 
     if (newPlaylist_song) {
       return res.json({
-        message: 'Playlist created successfully',
+        message: 'Track in playlist created successfully',
         data: newPlaylist_song
       });
     }
@@ -41,34 +42,36 @@ async function createPlaylist(req, res) {
   }
 }
 
-async function updatePlaylist(req, res) {
+async function getPlaylistSongs(req, res) {
+  try {
+    const playlistSongs = await _playlist_song.default.findAll();
+    res.json({
+      data: playlistSongs
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: {
+        code: "ERROR",
+        http_code: 500,
+        message: 'Something goes wrong' + err
+      }
+    });
+  }
+}
+
+async function deletePlaylistSongs(req, res) {
   try {
     const {
       id
     } = req.params;
-    const {
-      playlist_id,
-      song_id
-    } = req.body;
-    const data = await _playlist_song.default.findAll({
-      attributes: ['id', 'playlist_id', 'song_id'],
+    const deleteRowCount = await _playlist_song.default.destroy({
       where: {
         id
       }
     });
-
-    if (data.length > 0) {
-      data.forEach(async Playlist_song => {
-        await Playlist_song({
-          playlist_id,
-          song_id
-        });
-      });
-    }
-
-    return res.json({
-      message: 'Playlist updated succesfully',
-      data: data
+    res.json({
+      message: 'Track in playlist deleted',
+      count: deleteRowCount
     });
   } catch (err) {
     res.status(500).json({

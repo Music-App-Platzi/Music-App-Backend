@@ -17,6 +17,8 @@ var _auth = _interopRequireDefault(require("./routes/auth.routes"));
 
 var _songs = _interopRequireDefault(require("./routes/songs.routes"));
 
+var _songs_heards = _interopRequireDefault(require("./routes/songs_heards.routes"));
+
 var _artists = _interopRequireDefault(require("./routes/artists.routes"));
 
 var _playlists = _interopRequireDefault(require("./routes/playlists.routes"));
@@ -65,7 +67,9 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', _auth.default); //songs
 
-app.use('/api/songs', _songs.default); //artists
+app.use('/api/songs', _songs.default); //songs_heard
+
+app.use('/api/songs-heards', _songs_heards.default); //artists
 
 app.use('/api/artists', _artists.default); //playlists
 

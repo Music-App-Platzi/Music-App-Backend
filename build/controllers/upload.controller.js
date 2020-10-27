@@ -4,11 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.uploadThumbnail = uploadThumbnail;
+exports.uploadThumbnailPlaylist = uploadThumbnailPlaylist;
 exports.uploadFile = uploadFile;
 
 var _user = _interopRequireDefault(require("../models/user"));
 
 var _config = _interopRequireDefault(require("../config"));
+
+var _playlist = _interopRequireDefault(require("../models/playlist"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31,6 +34,43 @@ async function uploadThumbnail(req, res) {
     if (args.length > 0) {
       args.forEach(async User => {
         await User.update({
+          thumbnail
+        });
+      });
+    }
+
+    return res.json({
+      message: 'Thumbnail upload successfully',
+      data: args
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: {
+        code: "ERROR",
+        http_code: 500,
+        message: 'Somethin goes wrong' + error
+      }
+    });
+  }
+}
+
+async function uploadThumbnailPlaylist(req, res) {
+  try {
+    const {
+      id
+    } = req.params;
+    const uploadThumbnail = await uploadFile(req.file, 'thumbnail-playlists/');
+    const thumbnail = uploadThumbnail.Location;
+    const args = await _playlist.default.findAll({
+      attributes: ['id', 'user_id', 'name', 'thumbnail'],
+      where: {
+        id
+      }
+    });
+
+    if (args.length > 0) {
+      args.forEach(async Playlist => {
+        await Playlist.update({
           thumbnail
         });
       });

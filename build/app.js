@@ -15,6 +15,10 @@ var _helmet = _interopRequireDefault(require("helmet"));
 
 var _auth = _interopRequireDefault(require("./routes/auth.routes"));
 
+var _songs = _interopRequireDefault(require("./routes/songs.routes"));
+
+var _songs_heards = _interopRequireDefault(require("./routes/songs_heards.routes"));
+
 var _artists = _interopRequireDefault(require("./routes/artists.routes"));
 
 var _playlists = _interopRequireDefault(require("./routes/playlists.routes"));
@@ -26,6 +30,8 @@ var _upload = _interopRequireDefault(require("./routes/upload.routes"));
 var _albums = _interopRequireDefault(require("./routes/albums.routes"));
 
 var _roles = _interopRequireDefault(require("./routes/roles.routes"));
+
+var _playlist_songs = _interopRequireDefault(require("./routes/playlist_songs.routes"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59,7 +65,11 @@ app.get('/', (req, res) => {
   });
 }); // routes
 
-app.use('/api/auth', _auth.default); //artists
+app.use('/api/auth', _auth.default); //songs
+
+app.use('/api/songs', _songs.default); //songs_heard
+
+app.use('/api/songs-heards', _songs_heards.default); //artists
 
 app.use('/api/artists', _artists.default); //playlists
 
@@ -71,6 +81,8 @@ app.use('/api/upload', _upload.default); //album
 
 app.use('/api/albums', _albums.default); //role
 
-app.use('/api/roles', _roles.default);
+app.use('/api/roles', _roles.default); //playlistSongs
+
+app.use('/api/playlistSongs', _playlist_songs.default);
 var _default = app;
 exports.default = _default;

@@ -7,7 +7,8 @@ const Song = sequelize.define('songs', {
         primaryKey: true
     },
     album_id:{
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
     },
     name:{
         type: Sequelize.TEXT
@@ -19,9 +20,9 @@ const Song = sequelize.define('songs', {
         type: Sequelize.TEXT
     },
     thumbnail:{
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT        
     },
-    playbacks:{
+    popularity:{
         type: Sequelize.INTEGER
     },
     genre:{

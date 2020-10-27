@@ -16,5 +16,6 @@ const multer = require('multer');
 const upload = multer();
 //api/upload
 router.post('/profile/:id', upload.single('thumbnail'), _upload.uploadThumbnail);
+router.post('/playlists/:id', upload.single('thumbnail'), _upload.uploadThumbnailPlaylist);
 var _default = router;
 exports.default = _default;

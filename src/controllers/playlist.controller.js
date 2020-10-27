@@ -116,7 +116,7 @@ export async function deletePlaylist(req, res) {
             count: deleteRowCount
         })
     } catch (err) {
-        res,status(500).json({
+        res.status(500).json({
             error: {
                 code: "ERROR",
                 http_code: 500,

@@ -9,7 +9,7 @@ export const signUp = (req, res) => {
 
         // create user
         User.create({
-            rol_id: req.body.rol_id,
+            rol_id: 2,
             username: req.body.username,
             name: req.body.name,
             mail: req.body.mail,

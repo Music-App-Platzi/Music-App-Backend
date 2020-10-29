@@ -33,6 +33,9 @@ const User = _postgres.sequelize.define('users', {
   },
   thumbnail: {
     type: _sequelize.default.TEXT
+  },
+  state: {
+    type: _sequelize.default.BOOLEAN
   }
 }, {
   timestamps: false

@@ -24,6 +24,9 @@ const User = sequelize.define('users', {
     },
     thumbnail:{
         type: Sequelize.TEXT
+    },
+    state:{
+        type: Sequelize.BOOLEAN
     }    
 }, {
     timestamps:false

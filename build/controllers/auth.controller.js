@@ -21,7 +21,7 @@ const signUp = (req, res) => {
 
 
   _user.default.create({
-    rol_id: req.body.rol_id,
+    rol_id: 2,
     username: req.body.username,
     name: req.body.name,
     mail: req.body.mail,
@@ -73,7 +73,6 @@ const logIn = (req, res) => {
 
         res.json({
           user: user,
-          is_user: true,
           token: token
         });
       } else {

@@ -7,11 +7,11 @@ exports.default = void 0;
 
 var _sequelize = _interopRequireDefault(require("sequelize"));
 
-var _database = require("../database/database");
+var _postgres = require("../database/postgres");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const User = _database.sequelize.define('users', {
+const User = _postgres.sequelize.define('users', {
   id: {
     type: _sequelize.default.INTEGER,
     primaryKey: true

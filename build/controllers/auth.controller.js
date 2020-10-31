@@ -17,17 +17,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const signUp = (req, res) => {
   // hash password
-  let password = _bcryptjs.default.hashSync(req.body.password, 10); // create user
+  let password = _bcryptjs.default.hashSync(req.body.password, 10);
 
+  let state = true; // create user
 
   _user.default.create({
     rol_id: 2,
     username: req.body.username,
     name: req.body.name,
     mail: req.body.mail,
-    password: password
+    password: password,
+    state: state
   }, {
-    fields: ['rol_id', 'username', 'name', 'mail', 'password']
+    fields: ['rol_id', 'username', 'name', 'mail', 'password', 'state']
   }).then(user => {
     // create token
     let token = _jsonwebtoken.default.sign({
@@ -63,22 +65,28 @@ const logIn = (req, res) => {
         msg: "This mail not exist"
       });
     } else {
-      if (_bcryptjs.default.compareSync(password, user.password)) {
-        // create token
-        let token = _jsonwebtoken.default.sign({
-          user: user
-        }, _config.default.SECRET, {
-          expiresIn: 86400
-        });
+      if (user.state) {
+        if (_bcryptjs.default.compareSync(password, user.password)) {
+          // create token
+          let token = _jsonwebtoken.default.sign({
+            user: user
+          }, _config.default.SECRET, {
+            expiresIn: 86400
+          });
 
-        res.json({
-          user: user,
-          token: token
-        });
+          res.json({
+            user: user,
+            token: token
+          });
+        } else {
+          // Unauthorized Access
+          res.status(401).json({
+            msg: "Incorrect Password"
+          });
+        }
       } else {
-        // Unauthorized Access
         res.status(401).json({
-          msg: "Incorrect Password"
+          msg: "Inactive User"
         });
       }
     }

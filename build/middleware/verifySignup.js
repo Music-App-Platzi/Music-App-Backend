@@ -12,13 +12,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const checkDuplicateUsernameOrEmail = async (req, res, next) => {
   try {
     const username = await _user.default.findOne({
-      username: req.body.username
+      where: {
+        username: req.body.username
+      }
     });
     if (username) return res.status(400).json({
       message: "The user already exists"
     });
     const mail = await _user.default.findOne({
-      mail: req.body.mail
+      where: {
+        mail: req.body.mail
+      }
     });
     if (mail) return res.status(400).json({
       message: "The mail already exists"

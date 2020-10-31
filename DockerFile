@@ -3,9 +3,11 @@ FROM node:14
 WORKDIR /app
 COPY package.json package-lock.json /app/
 RUN npm install
+COPY ./ /app/
+
+RUN npm rebuild bcrypt --build-from-source
+RUN npm run build
 
 EXPOSE 3000
 
-COPY ./ /app/
-
-CMD npm run start
+CMD npm start

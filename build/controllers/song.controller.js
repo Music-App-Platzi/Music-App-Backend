@@ -17,7 +17,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 async function getSongs(req, res) {
   try {
-    const songs = await _song.default.findAll();
+    const {
+      paginate
+    } = req.query;
+    let pag = paginate * 25;
+    const songs = await _song.default.findAndCountAll({
+      limit: 25,
+      offset: pag
+    });
     res.json({
       data: songs
     });

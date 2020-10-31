@@ -17,7 +17,12 @@ const bcrypt = require("bcrypt");
 
 async function getUsers(req, res) {
   try {
-    const users = await _user.default.findAll();
+    const state = true;
+    const users = await _user.default.findAll({
+      where: {
+        state
+      }
+    });
     res.json({
       data: users
     });
@@ -141,14 +146,23 @@ async function deleteUser(req, res) {
     const {
       id
     } = req.params;
-    const deleteRowCount = await _user.default.destroy({
+    const data = await _user.default.findAll({
+      attributes: ['id', 'rol_id', 'name', 'mail', 'password', 'thumbnail', 'state'],
       where: {
         id
       }
     });
+
+    if (data.length > 0) {
+      data.forEach(async User => {
+        await User.update({
+          state: false
+        });
+      });
+    }
+
     res.json({
-      message: 'User deleted',
-      count: deleteRowCount
+      message: 'User deleted'
     });
   } catch (error) {
     res.status(500).json({

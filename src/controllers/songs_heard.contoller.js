@@ -86,26 +86,3 @@ export async function like(req, res) {
         });
     }
 }
-//
-//export async function deleteAlbum(req, res) {
-//    try {
-//        const { id } = req.params;
-//        const deleteRowCount = await Album.destroy({
-//            where: {
-//                id
-//            }
-//        });
-//        res.json({
-//            message: 'Album deleted',
-//            count: deleteRowCount
-//        })
-//    } catch (error) {
-//        res.status(500).json({
-//            error: {
-//                code: "ERROR",
-//                http_code: 500,
-//                message: 'Somethin goes wrong' + error
-//            }
-//        });
-//    }
-//}

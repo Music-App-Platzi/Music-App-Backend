@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+  flask:
+    build:
+      context: ./flask
+      dockerfile: Dockerfile
+    ports:
+      - '8888:8888'
+  express:
+    build:
+      context: ./express
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'

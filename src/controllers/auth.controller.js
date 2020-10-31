@@ -34,11 +34,7 @@ export const signUp = (req, res) => {
         }).catch(err => {
             res.status(500).json(err);
         });
-
     }
-
-
-
 
 export const logIn = (req, res) => {
 
@@ -54,27 +50,27 @@ export const logIn = (req, res) => {
             if (!user) {
                 res.status(404).json({ msg: "This mail not exist" });
             } else {
+                if (user.state) {
+                    if (bcrypt.compareSync(password, user.password)) {
 
-                if (bcrypt.compareSync(password, user.password)) {
+                        // create token
+                        let token = jwt.sign({ user: user }, config.SECRET, {
+                            expiresIn: 86400
+                        });
 
-                    // create token
-                    let token = jwt.sign({ user: user }, config.SECRET, {
-                        expiresIn: 86400
-                    });
+                        res.json({
+                            user: user,
+                            token: token
+                        })
 
-                    res.json({
-                        user: user,
-                        token: token
-                    })
-
-                } else {
-
-                    // Unauthorized Access
-                    res.status(401).json({ msg: "Incorrect Password" })
+                    } else {
+                        // Unauthorized Access
+                        res.status(401).json({ msg: "Incorrect Password" })
+                    }
+                }else{
+                    res.status(401).json({ msg: "Inactive User" })
                 }
-
             }
-
         }).catch(err => {
             res.status(500).json(err);
         })

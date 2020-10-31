@@ -3,7 +3,12 @@ import { uploadFile } from '../controllers/upload.controller'
 
 export async function getSongs(req, res) {
     try {
-        const songs = await Song.findAll();
+        const { paginate } = req.query;
+        let pag = paginate * 25
+        const songs = await Song.findAndCountAll({
+            limit: 25,
+            offset: pag,
+        });
         res.json({
             data: songs
         })

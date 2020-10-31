@@ -5,8 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.counterSong_heard = counterSong_heard;
 exports.like = like;
+exports.getSongsLikeByUser = getSongsLikeByUser;
 
 var _songs_heard = _interopRequireDefault(require("../models/songs_heard"));
+
+var _song = _interopRequireDefault(require("../models/song"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -95,26 +98,45 @@ async function like(req, res) {
       }
     });
   }
-} //
-//export async function deleteAlbum(req, res) {
-//    try {
-//        const { id } = req.params;
-//        const deleteRowCount = await Album.destroy({
-//            where: {
-//                id
-//            }
-//        });
-//        res.json({
-//            message: 'Album deleted',
-//            count: deleteRowCount
-//        })
-//    } catch (error) {
-//        res.status(500).json({
-//            error: {
-//                code: "ERROR",
-//                http_code: 500,
-//                message: 'Somethin goes wrong' + error
-//            }
-//        });
-//    }
-//}
+}
+
+async function getSongsLikeByUser(req, res) {
+  try {
+    const {
+      user_id
+    } = req.params;
+    const like = true;
+    const songs_heard = await _songs_heard.default.findAll({
+      attributes: ['id', 'song_id', 'user_id', 'like', 'playbacks', 'heard_at'],
+      where: {
+        user_id,
+        like
+      }
+    });
+    let songs_heards_id = new Array();
+
+    for (let i = 0; i < songs_heard.length; i++) {
+      songs_heards_id.push(songs_heard[i].song_id);
+    }
+
+    const songs = await _song.default.findAll({
+      attributes: ['id', 'album_id', 'name', 'duration', 'song_link', 'thumbnail', 'popularity', 'genre'],
+      where: {
+        id: songs_heards_id
+      }
+    });
+    res.json({
+      data: {
+        songs
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: {
+        code: "ERROR",
+        http_code: 500,
+        message: 'Somethin goes wrong' + error
+      }
+    });
+  }
+}

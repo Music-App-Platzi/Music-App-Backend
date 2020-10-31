@@ -45,7 +45,7 @@ async function counterSong_heard(req, res) {
         heard_at: Date.now(),
         playbacks: 1
       }, {
-        fields: ['song_id', 'user_id', 'like', 'playbacks']
+        fields: ['song_id', 'user_id', 'like', 'heard_at', 'playbacks']
       });
 
       if (newSongHeard) {
@@ -88,6 +88,23 @@ async function like(req, res) {
         message: 'liked',
         data: likeSong
       });
+    } else {
+      let newSongHeard = await _songs_heard.default.create({
+        song_id,
+        user_id,
+        like,
+        heard_at: Date.now(),
+        playbacks: 0
+      }, {
+        fields: ['song_id', 'user_id', 'like', 'heard_at', 'playbacks']
+      });
+
+      if (newSongHeard) {
+        return res.json({
+          message: 'liked',
+          data: newSongHeard
+        });
+      }
     }
   } catch (error) {
     res.status(500).json({

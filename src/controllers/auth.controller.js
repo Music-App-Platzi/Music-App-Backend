@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 export const signUp = (req, res) => {
     // hash password
     let password = bcrypt.hashSync(req.body.password, 10);
+    let state = true
 
         // create user
         User.create({
@@ -13,9 +14,10 @@ export const signUp = (req, res) => {
             username: req.body.username,
             name: req.body.name,
             mail: req.body.mail,
-            password: password
+            password: password,
+            state: state
         },{
-            fields: ['rol_id', 'username', 'name', 'mail', 'password'] 
+            fields: ['rol_id', 'username', 'name', 'mail', 'password', 'state'] 
         }
         ).then(user => {
 

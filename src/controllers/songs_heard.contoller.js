@@ -33,7 +33,7 @@ export async function counterSong_heard(req, res) {
                 playbacks: 1
             },
                 {
-                    fields: ['song_id', 'user_id', 'like','playbacks'] 
+                    fields: ['song_id', 'user_id', 'like', 'heard_at','playbacks'] 
                 });
             if (newSongHeard) {
                 return res.json({
@@ -56,7 +56,6 @@ export async function counterSong_heard(req, res) {
 
 export async function like(req, res) {
     try {
-        
         const { song_id, user_id, like } = req.body;
         
         const likeSong = await Song_heard.findOne({
@@ -76,6 +75,25 @@ export async function like(req, res) {
                 message: 'liked',
                 data: likeSong
             })
+        }else{
+            let newSongHeard = await Song_heard.create({
+                song_id,
+                user_id,
+                like,
+                heard_at: Date.now(),
+                playbacks: 0
+            },
+            {
+                fields: ['song_id', 'user_id', 'like', 'heard_at', 'playbacks'] 
+            });
+
+            if (newSongHeard) {    
+                return res.json({
+                    message: 'liked',
+                    data: newSongHeard
+                })
+            }
+
         }
     } catch (error) {
         res.status(500).json({

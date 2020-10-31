@@ -1,4 +1,5 @@
 import Song_heard from '../models/songs_heard';
+import Song from '../models/song';
 
 export async function counterSong_heard(req, res) {
     const { song_id, user_id } = req.body;
@@ -32,7 +33,7 @@ export async function counterSong_heard(req, res) {
                 playbacks: 1
             },
                 {
-                    fields: ['song_id', 'user_id', 'like','playbacks'] 
+                    fields: ['song_id', 'user_id', 'like', 'heard_at','playbacks'] 
                 });
             if (newSongHeard) {
                 return res.json({
@@ -55,7 +56,6 @@ export async function counterSong_heard(req, res) {
 
 export async function like(req, res) {
     try {
-        
         const { song_id, user_id, like } = req.body;
         
         const likeSong = await Song_heard.findOne({
@@ -75,6 +75,25 @@ export async function like(req, res) {
                 message: 'liked',
                 data: likeSong
             })
+        }else{
+            let newSongHeard = await Song_heard.create({
+                song_id,
+                user_id,
+                like,
+                heard_at: Date.now(),
+                playbacks: 0
+            },
+            {
+                fields: ['song_id', 'user_id', 'like', 'heard_at', 'playbacks'] 
+            });
+
+            if (newSongHeard) {    
+                return res.json({
+                    message: 'liked',
+                    data: newSongHeard
+                })
+            }
+
         }
     } catch (error) {
         res.status(500).json({
@@ -86,26 +105,43 @@ export async function like(req, res) {
         });
     }
 }
-//
-//export async function deleteAlbum(req, res) {
-//    try {
-//        const { id } = req.params;
-//        const deleteRowCount = await Album.destroy({
-//            where: {
-//                id
-//            }
-//        });
-//        res.json({
-//            message: 'Album deleted',
-//            count: deleteRowCount
-//        })
-//    } catch (error) {
-//        res.status(500).json({
-//            error: {
-//                code: "ERROR",
-//                http_code: 500,
-//                message: 'Somethin goes wrong' + error
-//            }
-//        });
-//    }
-//}
+
+export async function getSongsLikeByUser(req, res) {
+    try {
+        const { user_id } = req.params;
+        const like = true;
+        
+        const songs_heard = await Song_heard.findAll({
+            attributes: ['id', 'song_id', 'user_id', 'like', 'playbacks', 'heard_at'],
+            where:{
+                user_id,
+                like
+            }
+        });
+        
+        
+        let songs_heards_id = new Array();             
+        for (let i = 0; i < songs_heard.length; i++) {
+            songs_heards_id.push(songs_heard[i].song_id);            
+        }
+
+        const songs = await Song.findAll({
+            attributes: ['id', 'album_id', 'name', 'duration', 'song_link', 'thumbnail', 'popularity', 'genre'],
+            where:{
+                id: songs_heards_id
+            }
+        });
+    res.json({
+        data:{songs}
+    });
+    } catch (error) {
+        res.status(500).json({
+            error:{
+                code: "ERROR",
+                http_code:500,
+                message: 'Somethin goes wrong'+ error
+            }
+        });
+    }
+    
+}

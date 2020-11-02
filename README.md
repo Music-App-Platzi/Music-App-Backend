@@ -1,8 +1,7 @@
 # Sound Music App API
 
-
-The Forum App API enable devs customize forums. Can be utilized to access, create, read, update and delete users, access posts, comments and categories.
-Also the endpoints are covered by roles permissions and JWT for authorization for each type.
+Sound Music API enable devs customize and utilized for sigup/sigin features, create, update, delete and get songs, albums, artists and playlists for the users.
+It also has the option to like your favorite songs and offer personalized recommendations.
 
 
 

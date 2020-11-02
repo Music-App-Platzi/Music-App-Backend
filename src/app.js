@@ -33,13 +33,17 @@ app.use(morgan('dev'));
 app.use(json());
 app.use(helmet());
 
+const os = require("os");
+const hostname = os.hostname();
+
 // welcome routes
 app.get('/', (req, res) => {
     res.json({
         author: app.get('pkg').author,
         name: app.get('pkg').name,
         description: app.get('pkg').description,
-        version: app.get('pkg').version 
+        version: app.get('pkg').version, 
+        hostname: hostname
     })
 })
 

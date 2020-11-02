@@ -67,7 +67,7 @@ async function createPlaylist(req, res) {
       name,
       thumbnail
     }, {
-      fields: ['name']
+      fields: ['user_id', 'name', 'thumbnail']
     });
 
     if (newPlaylist) {

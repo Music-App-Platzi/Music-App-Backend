@@ -3,7 +3,7 @@ import { uploadFile } from '../controllers/upload.controller'
 
 export async function getSongs(req, res) {
     try {
-        const songs = await Song.findAndCountAll();
+        const songs = await Song.findAll();
         res.json({
             data: songs
         })

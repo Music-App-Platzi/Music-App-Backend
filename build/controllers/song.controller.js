@@ -17,7 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 async function getSongs(req, res) {
   try {
-    const songs = await _song.default.findAndCountAll();
+    const songs = await _song.default.findAll();
     res.json({
       data: songs
     });

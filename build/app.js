@@ -54,14 +54,19 @@ app.set('pkg', _package.default); // middleware
 
 app.use((0, _morgan.default)('dev'));
 app.use((0, _express.json)());
-app.use((0, _helmet.default)()); // welcome routes
+app.use((0, _helmet.default)());
+
+const os = require("os");
+
+const hostname = os.hostname(); // welcome routes
 
 app.get('/', (req, res) => {
   res.json({
     author: app.get('pkg').author,
     name: app.get('pkg').name,
     description: app.get('pkg').description,
-    version: app.get('pkg').version
+    version: app.get('pkg').version,
+    hostname: hostname
   });
 }); // routes
 

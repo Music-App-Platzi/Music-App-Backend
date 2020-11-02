@@ -49,7 +49,7 @@ export async function createPlaylist(req, res) {
             thumbnail
         },
             {
-                fields: ['name']
+                fields: ['user_id', 'name', 'thumbnail']
             });
         if (newPlaylist) {
             return res.json({

@@ -19,7 +19,7 @@ export async function getAlbums(req, res) {
 
 export async function createAlbum(req, res) {
     const { artist_id, name, release_date } = req.body;
-    
+
     try {
         let newAlbum = await Album.create({
             artist_id,
@@ -27,7 +27,7 @@ export async function createAlbum(req, res) {
             release_date,
         },
             {
-                fields: ['artist_id', 'name', 'release_date'] 
+                fields: ['artist_id', 'name', 'release_date']
             });
         if (newAlbum) {
             return res.json({
@@ -59,6 +59,8 @@ export async function updateAlbum(req, res) {
             }
         });
         if (data.length > 0) {
+            // TODO:
+            // Use Promise.all
             data.forEach(async Album => {
                 await Album.update({
                     artist_id,
@@ -86,6 +88,8 @@ export async function updateAlbum(req, res) {
 export async function deleteAlbum(req, res) {
     try {
         const { id } = req.params;
+        // TODO:
+        // Why use where?
         const deleteRowCount = await Album.destroy({
             where: {
                 id
